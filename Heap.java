@@ -48,7 +48,6 @@ class Heap {
 public class TestHeap {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Heap h = new Heap();
 		h.add(10);
 		h.add(8);
