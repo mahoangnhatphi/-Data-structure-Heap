@@ -1,42 +1,45 @@
-package heap;
-
 import java.util.ArrayList;
+import java.util.List;
 
 class Heap {
-	ArrayList<Integer> heap = new ArrayList<>();
-	
+	List<Integer> heap = new ArrayList<>();
+
 	public Heap() {
+		super();
 	}
-	
+
+	public void swap(int a, int b) {
+		if (a == b)
+			return;
+		heap.set(a, heap.get(a) + heap.get(b));
+		heap.set(b, heap.get(a) - heap.get(b));
+		heap.set(a, heap.get(a) - heap.get(b));
+	}
+
 	public void heaplify(int size, int index) {
 		int largest = index;
 		int leftChildNode = 2 * index + 1;
 		int rightChildNode = 2 * index + 2;
-//		System.out.println(leftChildNode + " " + rightChildNode + " " + index);
-		if (leftChildNode < size && heap.get(largest) < heap.get(leftChildNode))
+		if (leftChildNode < size && heap.get(leftChildNode) > heap.get(largest))
 			largest = leftChildNode;
-		if (rightChildNode < size && heap.get(largest) < heap.get(rightChildNode)) 
+		if (rightChildNode < size && heap.get(rightChildNode) > heap.get(largest))
 			largest = rightChildNode;
 		if (largest != index) {
-			Integer tmp = heap.get(largest);
-			heap.set(largest, heap.get(index));
-			heap.set(index, tmp);
+			swap(index, largest);
 			heaplify(size, largest);
 		}
 	}
-	
+
 	public void add(Integer el) {
 		heap.add(el);
 		for (int i = 0; i < heap.size() / 2; i++) {
 			heaplify(heap.size(), i);
 		}
 	}
-	
+
 	public void sort() {
 		for (int i = heap.size() - 1; i >= 0; i--) {
-			Integer tmp = heap.get(0);
-			heap.set(0, heap.get(i));
-			heap.set(i, tmp);
+			swap(0, i);
 			heaplify(i, 0);
 		}
 	}
@@ -46,18 +49,15 @@ public class TestHeap {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Heap heap = new Heap();
-		heap.add(2);
-		heap.add(8);
-		heap.add(6);
-		heap.add(1);
-		heap.add(10);
-		heap.add(15);
-		heap.add(3);
-		heap.add(12);
-		heap.add(11);
-		heap.sort();
-		System.out.println(heap.heap);
-		}
+		Heap h = new Heap();
+		h.add(10);
+		h.add(8);
+		h.add(9);
+		h.add(7);
+		h.add(6);
+		h.add(7);
+		h.sort();
+		System.out.println(h.heap);
+	}
 
 }
